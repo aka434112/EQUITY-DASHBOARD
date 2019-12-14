@@ -20,6 +20,12 @@
               </v-card-text>
             </v-card>
           </v-flex>
+          <v-flex xs12 v-show="noResults" class="text-center">
+            <br/>
+            <v-alert text type="warning">
+              No data to display
+            </v-alert>
+          </v-flex>
           <v-flex xs12 sm4>
             <v-card class="infoCard" v-if="eqData">
               <v-card-title class="justify-center">
@@ -65,7 +71,8 @@ export default {
       awaitingSearch: false,
       companiesList: [],
       searchInProgress: false,
-      eqData: null
+      eqData: null,
+      noResults: false
     }
   },
   methods: {
@@ -82,6 +89,11 @@ export default {
       const orgSymbol = vm.chosenSymbol.split(' ')[0];
       const equityData = await httpSvc.fetchEquity(orgSymbol, vm.duration);
       vm.eqData = equityData.data[0];
+      if(vm.eqData) {
+        vm.noResults = false;
+      } else {
+        vm.noResults = true;
+      }
       vm.UPDATE_APPLICATION_STATE();
     }
   },
@@ -107,5 +119,11 @@ export default {
 <style scoped>
 .infoCard {
   margin: 1%;
+}
+.infoCard >>> table {
+  color: rgba(0,0,0,.87) !important;
+}
+.infoCard >>> a {
+  text-decoration: none !important;
 }
 </style>
