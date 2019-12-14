@@ -20,7 +20,6 @@ export default {
 .circle {
   border-radius: 49%;
   border: 5px solid orange;
-  cursor: pointer;
   display: inline-block;
   font-size: 25px;
   text-align: center;
