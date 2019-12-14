@@ -1,6 +1,7 @@
 <template>
   <v-app id="app">
     <div>
+      <v-overlay :value="loading"></v-overlay>
       <v-app-bar color="blue" dark>
           <v-app-bar-nav-icon @click="showNavMenu=true"></v-app-bar-nav-icon>
           <v-toolbar-title>EQUITY DASHBOARD</v-toolbar-title>
@@ -23,6 +24,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: 'App',
   data () {
@@ -34,6 +37,9 @@ export default {
       ],
       mini: false
     }
+  },
+  computed: {
+    ...mapGetters(['loading'])
   }
 }
 </script>

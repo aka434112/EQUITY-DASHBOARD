@@ -6,13 +6,13 @@
               <v-card-text>
                 <v-container grid-list-md>
                   <v-layout wrap>
-                    <v-flex xs12 sm4>
+                    <v-flex xs12 sm5>
                       <v-autocomplete v-model="chosenSymbol" :loading="searchInProgress" :search-input.sync="symbol" :items="companiesList" hide-no-data hide-selected label="Symbol / Organization" prepend-icon="mdi-office-building" return-object></v-autocomplete>
                     </v-flex>
                     <v-flex xs12 sm4>
                       <v-select prepend-icon="mdi-clock" v-model="duration" :items="durationItems" label="Duration"></v-select>
                     </v-flex>
-                    <v-flex xs6 sm4 align-self-center>
+                    <v-flex xs6 sm3 align-self-center>
                       <v-btn color="primary" text @click="fetchEquityData()">Search</v-btn>
                     </v-flex>
                   </v-layout>
@@ -50,7 +50,9 @@
 
 <script>
 import dashboardConstants from '../constants/dashboardConstants'
-import httpSvc from '../rest/nse/equityUri'
+import httpSvc from '../rest/nse/equityUri';
+import { mapMutations } from "vuex";
+
 
 export default {
   name: 'home',
@@ -67,6 +69,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['UPDATE_APPLICATION_STATE']),
     async fetchCompanies () {
       const vm = this;
       const queryResults = await httpSvc.getListOfCompanies(vm.symbol);
@@ -75,9 +78,11 @@ export default {
     },
     async fetchEquityData () {
       const vm = this;
+      vm.UPDATE_APPLICATION_STATE();
       const orgSymbol = vm.chosenSymbol.split(' ')[0];
       const equityData = await httpSvc.fetchEquity(orgSymbol, vm.duration);
       vm.eqData = equityData.data[0];
+      vm.UPDATE_APPLICATION_STATE();
     }
   },
   watch: {
