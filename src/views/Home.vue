@@ -26,6 +26,24 @@
               No data to display
             </v-alert>
           </v-flex>
+          <v-flex xs12 v-if="eqData" class="infoCard">
+            <v-card>
+              <v-container fluid>
+        				<v-layout row wrap>
+                  <v-card-title>ISIN {{eqData[ISIN_KEY]}}</v-card-title>
+                  <v-flex xs12 sm3 class="circleContainer">
+                    <info-in-circle title="Face Value" :value="eqData[FACE_VALUE_KEY]"></info-in-circle>
+                  </v-flex>
+                  <v-flex xs12 sm3 class="circleContainer">
+                    <info-in-circle title="Paid Up Value" :value="eqData[PAID_UP_VALUE_KEY]"></info-in-circle>
+                  </v-flex>
+                  <v-flex xs12 sm3 class="circleContainer">
+                    <info-in-circle title="Market Lot" :value="eqData[MARKET_LOT_KEY]"></info-in-circle>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-card>
+          </v-flex>
           <v-flex xs12 sm4>
             <v-card class="infoCard" v-if="eqData">
               <v-card-title class="justify-center">
@@ -57,7 +75,8 @@
 <script>
 import dashboardConstants from '../constants/dashboardConstants'
 import httpSvc from '../rest/nse/equityUri';
-import { mapMutations } from "vuex";
+import { mapMutations } from 'vuex';
+import infoInCircle from '../components/infoInCircle';
 
 
 export default {
@@ -65,6 +84,10 @@ export default {
   data () {
     return {
       symbol: "",
+      ISIN_KEY: dashboardConstants.ISIN_KEY,
+      MARKET_LOT_KEY: dashboardConstants.MARKET_LOT_KEY,
+      FACE_VALUE_KEY: dashboardConstants.FACE_VALUE_KEY,
+      PAID_UP_VALUE_KEY: dashboardConstants.PAID_UP_VALUE_KEY,
       chosenSymbol: null,
       durationItems: dashboardConstants.durationItems,
       duration: dashboardConstants.defaultDuration,
@@ -74,6 +97,9 @@ export default {
       eqData: null,
       noResults: false
     }
+  },
+  components: {
+    infoInCircle
   },
   methods: {
     ...mapMutations(['UPDATE_APPLICATION_STATE']),
@@ -125,5 +151,8 @@ export default {
 }
 .infoCard >>> a {
   text-decoration: none !important;
+}
+.circleContainer {
+  text-align: center !important;
 }
 </style>

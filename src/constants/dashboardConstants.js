@@ -7,5 +7,9 @@ export default {
     "Last 6 Months",
     "Last 1 Month"
   ],
-  defaultDuration: "More than 5 Years"
+  defaultDuration: "More than 5 Years",
+  ISIN_KEY: "isin",
+  MARKET_LOT_KEY: "mlot",
+  FACE_VALUE_KEY: "face",
+  PAID_UP_VALUE_KEY: "paid"
 }

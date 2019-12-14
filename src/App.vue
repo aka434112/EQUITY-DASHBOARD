@@ -32,8 +32,7 @@ export default {
     return {
       showNavMenu: false,
       items: [
-        { title: 'Home', icon: 'mdi-home', to: '/' },
-        { title: 'Settings', icon: 'mdi-settings', to: '/settings' }
+        { title: 'Home', icon: 'mdi-home', to: '/' }
       ],
       mini: false
     }
