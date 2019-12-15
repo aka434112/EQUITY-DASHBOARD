@@ -108,22 +108,32 @@ export default {
     ...mapMutations(['UPDATE_APPLICATION_STATE']),
     async fetchCompanies () {
       const vm = this;
-      const queryResults = await httpSvc.getListOfCompanies(vm.symbol);
-      vm.companiesList = queryResults.data;
-      vm.searchInProgress = false;
+	  try{
+		  const queryResults = await httpSvc.getListOfCompanies(vm.symbol);
+		  vm.companiesList = queryResults.data;
+	  } catch (e) {
+		  console.log(e.message);
+	  }	finally {
+		  vm.searchInProgress = false;
+	  }
     },
     async fetchEquityData () {
       const vm = this;
       vm.UPDATE_APPLICATION_STATE();
-      const orgSymbol = vm.chosenSymbol.split(' ')[0];
-      const equityData = await httpSvc.fetchEquity(orgSymbol, vm.duration);
-      vm.eqData = equityData.data[0];
-      if(vm.eqData) {
-        vm.noResults = false;
-      } else {
-        vm.noResults = true;
-      }
-      vm.UPDATE_APPLICATION_STATE();
+	  try {
+		  const orgSymbol = vm.chosenSymbol.split(' ')[0];
+		  const equityData = await httpSvc.fetchEquity(orgSymbol, vm.duration);
+		  vm.eqData = equityData.data[0];
+		  if(vm.eqData) {
+			vm.noResults = false;
+		  } else {
+			vm.noResults = true;
+		  }
+	  } catch (e) {
+		console.log(e.message);
+	  } finally {
+		vm.UPDATE_APPLICATION_STATE();
+	  }
     }
   },
   watch: {
