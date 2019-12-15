@@ -12,7 +12,10 @@
                     <v-flex xs12 sm4>
                       <v-select prepend-icon="mdi-clock" v-model="duration" :items="durationItems" label="Duration"></v-select>
                     </v-flex>
-                    <v-flex xs6 sm3 align-self-center>
+                    <v-flex xs6 sm3 align-self-center v-if="!chosenSymbol && chosenSymbol != ''" >
+                      <v-btn disabled color="primary" text @click="fetchEquityData()">Search</v-btn>
+                    </v-flex>
+                    <v-flex xs6 sm3 align-self-center v-else>
                       <v-btn color="primary" text @click="fetchEquityData()">Search</v-btn>
                     </v-flex>
                   </v-layout>
